@@ -16,6 +16,7 @@ router.post('/add', async (req,res) => {
         rut_p
     };  
     await pool.query('INSERT INTO hora_medica set ?', [nuevaHora]);
+    req.flash('success','Hora medica creada satisfactoriamente');
     res.redirect('lista');
 });
 
@@ -27,6 +28,7 @@ router.get('/lista', async (req,res) => {
 router.get('/eliminar/:id',async (req,res) => {
     const { id } = req.params;
     await pool.query("DELETE FROM hora_medica WHERE id_hora = ?", [id]);
+    req.flash('success','Hora medica eliminada satisfactoriamente');
     res.redirect('../lista');
 });
 router.get('/editar/:id', async (req,res) => {
@@ -42,6 +44,7 @@ router.post('/editar/:id', async (req,res) => {
         rut_p
     };
     const datos = await pool.query("UPDATE hora_medica SET ? WHERE id_hora = ?",[nuevaHora,id]);
+    req.flash('success', 'Hora medica modificada satisfactoriamente');
     res.redirect('../lista');
 });
 
